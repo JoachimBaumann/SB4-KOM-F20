@@ -8,6 +8,7 @@ import static dk.sdu.mmmi.cbse.common.data.GameKeys.RIGHT;
 import static dk.sdu.mmmi.cbse.common.data.GameKeys.UP;
 
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
@@ -29,6 +30,7 @@ public class AstroidControlSystem implements IEntityProcessingService {
         for (Entity astroid : world.getEntities(Astroid.class)) {
             PositionPart positionPart = astroid.getPart(PositionPart.class);
             MovingPart movingPart = astroid.getPart(MovingPart.class);
+            LifePart lifePart = astroid.getPart(LifePart.class);
 
             movingPart.setUp(true);
             movingPart.setLeft(new Random().nextInt(10) > 7);

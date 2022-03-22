@@ -3,6 +3,7 @@ package dk.sdu.mmmi.cbse.astroidsystem;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
@@ -31,6 +32,7 @@ public class AstroidPlugin implements IGamePluginService {
         float x = new Random().nextFloat() * gameData.getDisplayWidth();
         float y = new Random().nextFloat() * gameData.getDisplayHeight();
 
+
         int radNum = new Random().nextInt(150) % 3; // get random number between 0 and 2
 
         Astroid asteroid = new Astroid(AstroidType.values()[radNum]);
@@ -38,6 +40,7 @@ public class AstroidPlugin implements IGamePluginService {
         asteroid.setRadius(asteroid.getSize());
         asteroid.add(new MovingPart(0, asteroid.getSpeed(), asteroid.getSpeed(), 0));
         asteroid.add(new PositionPart(x, y, radians));
+        asteroid.add(new LifePart(1,5));
 
         return asteroid;
     }

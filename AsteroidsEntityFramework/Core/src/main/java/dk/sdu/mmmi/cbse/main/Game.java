@@ -7,15 +7,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import dk.sdu.mmmi.cbse.astroidsystem.AstroidControlSystem;
 import dk.sdu.mmmi.cbse.astroidsystem.AstroidPlugin;
+import dk.sdu.mmmi.cbse.collisionsystem.CollisionDetector;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.enemysystem.EnemyControlSystem;
 import dk.sdu.mmmi.cbse.enemysystem.EnemyPlugin;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
-
 import dk.sdu.mmmi.cbse.playersystem.PlayerControlSystem;
 import dk.sdu.mmmi.cbse.playersystem.PlayerPlugin;
 
@@ -30,6 +31,7 @@ public class Game
 
     private final GameData gameData = new GameData();
     private List<IEntityProcessingService> entityProcessors = new ArrayList<>();
+    private List<IPostEntityProcessingService> postEntityProcessors = new ArrayList<>();
     private List<IGamePluginService> entityPlugins = new ArrayList<>();
     private World world = new World();
 
@@ -49,22 +51,26 @@ public class Game
                 new GameInputProcessor(gameData)
         );
 
+        // GLUE CODE
         IGamePluginService playerPlugin = new PlayerPlugin();
         IGamePluginService enemyPlugin = new EnemyPlugin();
         IGamePluginService astroidPlugin = new AstroidPlugin();
+
+        IPostEntityProcessingService collisionDetector = new CollisionDetector();
 
         IEntityProcessingService playerProcess = new PlayerControlSystem();
         IEntityProcessingService enemmyProcess = new EnemyControlSystem();
         IEntityProcessingService astroidProcess = new AstroidControlSystem();
 
+        postEntityProcessors.add(collisionDetector);
 
         entityPlugins.add(playerPlugin);
 
         // adds more astroids & Enemy
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             entityPlugins.add(astroidPlugin);
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             entityPlugins.add(enemyPlugin);
         }
         entityProcessors.add(playerProcess);
@@ -99,6 +105,12 @@ public class Game
         for (IEntityProcessingService entityProcessorService : entityProcessors) {
             entityProcessorService.process(gameData, world);
         }
+
+        // Post Update (for calculations after entities move
+        for (IPostEntityProcessingService postEntityProcessingService : postEntityProcessors) {
+            postEntityProcessingService.process(gameData,world);
+        }
+
     }
 
     private void draw() {
@@ -137,4 +149,6 @@ public class Game
     @Override
     public void dispose() {
     }
+
+
 }
