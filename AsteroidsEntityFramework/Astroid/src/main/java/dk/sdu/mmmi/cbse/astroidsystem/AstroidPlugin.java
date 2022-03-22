@@ -21,7 +21,7 @@ public class AstroidPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        
+
         // Add entities to the world
         astroid = createAsteroid(gameData);
         world.addEntity(astroid);
@@ -40,7 +40,7 @@ public class AstroidPlugin implements IGamePluginService {
         asteroid.setRadius(asteroid.getSize());
         asteroid.add(new MovingPart(0, asteroid.getSpeed(), asteroid.getSpeed(), 0));
         asteroid.add(new PositionPart(x, y, radians));
-        asteroid.add(new LifePart(1,5));
+        asteroid.add(new LifePart(1, 5));
 
         return asteroid;
     }
