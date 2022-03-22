@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dk.sdu.mmmi.cbse.astroidsystem.AstroidControlSystem;
+import dk.sdu.mmmi.cbse.astroidsystem.AstroidPlugin;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -49,16 +51,25 @@ public class Game
 
         IGamePluginService playerPlugin = new PlayerPlugin();
         IGamePluginService enemyPlugin = new EnemyPlugin();
+        IGamePluginService astroidPlugin = new AstroidPlugin();
 
         IEntityProcessingService playerProcess = new PlayerControlSystem();
         IEntityProcessingService enemmyProcess = new EnemyControlSystem();
+        IEntityProcessingService astroidProcess = new AstroidControlSystem();
 
 
         entityPlugins.add(playerPlugin);
-        entityPlugins.add(enemyPlugin);
 
+        // adds more astroids & Enemy
+        for (int i = 0; i < 5; i++) {
+            entityPlugins.add(astroidPlugin);
+        }
+        for (int i = 0; i < 2; i++) {
+            entityPlugins.add(enemyPlugin);
+        }
         entityProcessors.add(playerProcess);
         entityProcessors.add(enemmyProcess);
+        entityProcessors.add(astroidProcess);
 
 
         // Lookup all Game Plugins using ServiceLoader
@@ -101,8 +112,8 @@ public class Game
             float[] shapey = entity.getShapeY();
 
             for (int i = 0, j = shapex.length - 1;
-                    i < shapex.length;
-                    j = i++) {
+                 i < shapex.length;
+                 j = i++) {
 
                 sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
             }
