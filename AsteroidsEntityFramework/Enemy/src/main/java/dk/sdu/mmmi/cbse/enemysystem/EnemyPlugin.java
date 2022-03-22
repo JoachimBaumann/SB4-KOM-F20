@@ -7,6 +7,8 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
+import java.util.Random;
+
 public class EnemyPlugin implements IGamePluginService {
 
     private Entity Enemy;
@@ -24,12 +26,16 @@ public class EnemyPlugin implements IGamePluginService {
 
     private Entity createEnemyShip(GameData gameData) {
 
+        Random random = new Random();
+
         float deacceleration = 10;
         float acceleration = 200;
         float maxSpeed = 300;
         float rotationSpeed = 5;
-        float x = gameData.getDisplayWidth() / 2;
-        float y = gameData.getDisplayHeight() / 2;
+        int rand = random.nextInt();
+        System.out.println(rand);
+        float x = gameData.getDisplayWidth() / random.nextInt();
+        float y = gameData.getDisplayHeight() / random.nextInt();
         float radians = 3.1415f / 2;
         
         Entity enemyShip = new Enemy();
