@@ -24,18 +24,23 @@ public class EnemyPlugin implements IGamePluginService {
         world.addEntity(Enemy);
     }
 
+    // Generates random float for createEnemyShip
+    private float random() {
+        Random random = new Random();
+        float rand = random.nextFloat() * 10;
+        return rand;
+    }
+
     private Entity createEnemyShip(GameData gameData) {
 
-        Random random = new Random();
+
 
         float deacceleration = 10;
         float acceleration = 200;
         float maxSpeed = 300;
         float rotationSpeed = 5;
-        int rand = random.nextInt();
-        System.out.println(rand);
-        float x = gameData.getDisplayWidth() / random.nextInt();
-        float y = gameData.getDisplayHeight() / random.nextInt();
+        float x = gameData.getDisplayWidth() / random();
+        float y = gameData.getDisplayHeight() / random();
         float radians = 3.1415f / 2;
         
         Entity enemyShip = new Enemy();
