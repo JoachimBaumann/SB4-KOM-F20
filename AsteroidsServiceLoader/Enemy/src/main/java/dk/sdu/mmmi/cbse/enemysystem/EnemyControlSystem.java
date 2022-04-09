@@ -10,6 +10,7 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import org.openide.util.lookup.ServiceProvider;
 
 import java.util.Random;
 
@@ -17,6 +18,8 @@ import java.util.Random;
  *
  * @author jcs
  */
+
+@ServiceProvider(service = IEntityProcessingService.class)
 public class EnemyControlSystem implements IEntityProcessingService {
 
     @Override
