@@ -5,8 +5,6 @@
  */
 package dk.sdu.mmmi.cbse.asteroid;
 
-import static dk.sdu.mmmi.cbse.asteroid.AsteroidType.MEDIUM;
-import static dk.sdu.mmmi.cbse.asteroid.AsteroidType.SMALL;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -15,14 +13,17 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.SplitterPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import org.openide.util.lookup.ServiceProvider;
+
 import java.util.Random;
-//import org.openide.util.lookup.ServiceProvider;
+
+import static dk.sdu.mmmi.cbse.asteroid.AsteroidType.MEDIUM;
+import static dk.sdu.mmmi.cbse.asteroid.AsteroidType.SMALL;
 
 /**
- *
  * @author Phillip O
  */
-//@ServiceProvider(service = IEntityProcessingService.class)
+@ServiceProvider(service = IEntityProcessingService.class)
 public class AsteroidSplitter implements IEntityProcessingService {
 
     Random rnd = new Random();
@@ -58,7 +59,7 @@ public class AsteroidSplitter implements IEntityProcessingService {
 
         Entity asteroid = new Asteroid(SMALL);
         asteroid.add(new MovingPart(0, speed, speed, 0));
-        asteroid.add(new PositionPart(x + rnd.nextInt(50), y+rnd.nextInt(50), radians));
+        asteroid.add(new PositionPart(x + rnd.nextInt(50), y + rnd.nextInt(50), radians));
         asteroid.add(new LifePart(2, 69));
         asteroid.add(new SplitterPart());
         asteroid.setRadius(5);
